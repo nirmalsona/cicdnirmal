@@ -1,0 +1,43 @@
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dep
+  labels:
+    app: cicd
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+       app: cicd
+  template:
+       metadata:
+           labels:
+             app: cicd
+
+       spec:
+         containers:
+              - name: container
+                image: nirmaldocker1987/cicd:latest
+                ports:
+                  - containerPort: 80
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+      name: cicdsvc
+spec:
+  selector:
+    app: cicd
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort      
+
+
+
+
+
